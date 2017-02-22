@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">豆宝小星星</string>
+    <string name="input_server_url">请输入服务器IP</string>
+    <string name="login_button">登陆</string>
+    <string name="login_input_error">请输入服务器IP~</string>
+    <string name="title_activity_photo_detail">PhotoDetailActivity</string>
+</resources>
