@@ -18,6 +18,25 @@ import java.util.List;
 public class QueryService
 {
 
+
+	private static QueryService INSTANCE;
+
+	private QueryService()
+	{
+
+	}
+
+
+
+	public static QueryService getInstance()
+	{
+		if(INSTANCE == null)
+		{
+			INSTANCE = new QueryService();
+		}
+		return INSTANCE;
+	}
+
 	public List<PhotoInfoRestModel> getRemotePhotoInfo(PhotoInfoSO so)
 	{
 		List<PhotoInfoRestModel> result = new ArrayList<PhotoInfoRestModel>();
@@ -66,6 +85,32 @@ public class QueryService
 		}
 		return photo;
 	}
+
+
+
+
+	public Bitmap getRemotePhotoSnap(PhotoInfoSO so)
+	{
+		HttpStack httpMgr = new HttpStack();
+		httpMgr.createConnection(so.getServerIp(),so.getServerPort());
+		Bitmap photo = null;
+		String searchCondition = so.generateSearchSnapCondition();
+		String queryRemoteUrl = CommonConstant.HTTP_URL_HEAD+so.getServerIp()+CommonConstant.LITTLESTAR_URL+searchCondition;
+		try
+		{
+			photo =httpMgr.remoteGetBitmap(queryRemoteUrl,null,1000);
+
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+		return photo;
+	}
+
+
+
+
 
 
 

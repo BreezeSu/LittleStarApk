@@ -66,7 +66,7 @@ public class PhotoDetailActivity extends BaseActivity
 		{
 			Message msg = new Message();
 			Bundle data = new Bundle();
-			data.putParcelable("photoPic",new QueryService().getRemotePhotoPic(searchConditon));
+			data.putParcelable("photoPic",QueryService.getInstance().getRemotePhotoPic(searchConditon));
 			msg.setData(data);
 			picHandler.sendMessage(msg);
 		}

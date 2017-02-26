@@ -1,5 +1,6 @@
 package com.breeze.project1.littlestar.model;
 
+import com.breeze.project1.littlestar.common.CommonConstant;
 import com.breeze.project1.littlestar.common.CommonUtils;
 
 import java.io.Serializable;
@@ -10,9 +11,7 @@ import java.io.Serializable;
 public class PhotoInfoSO implements Serializable
 {
 
-    private String searchCombine = "&";
 
-	private String searchBegin = "?";
 
 	private String serverIp;
 
@@ -33,12 +32,12 @@ public class PhotoInfoSO implements Serializable
 
 	public String generateSeachInfoCondition()
 	{
-        StringBuilder strBuilder = new StringBuilder(searchBegin+"queryType=info"+searchCombine+"pageLength="+getPageLength());
-		strBuilder.append(searchCombine).append("pageBegin="+getPageBegin()).append(searchCombine).append("orderBy="+getOrderBy());
+        StringBuilder strBuilder = new StringBuilder(CommonConstant.SEARCH_BEGIN+"queryType=info"+CommonConstant.SEARCH_COMBINE+"pageLength="+getPageLength());
+		strBuilder.append(CommonConstant.SEARCH_COMBINE).append("pageBegin="+getPageBegin()).append(CommonConstant.SEARCH_COMBINE).append("orderBy="+getOrderBy());
 
 		if(CommonUtils.getInstance().isNotEmptyStr(getName()))
 		{
-			strBuilder.append(searchCombine).append("name="+getName());
+			strBuilder.append(CommonConstant.SEARCH_COMBINE).append("name="+getName());
 		}
 		return strBuilder.toString();
 	}
@@ -46,10 +45,18 @@ public class PhotoInfoSO implements Serializable
 
 	public String generateSearchPicCondition()
 	{
-		StringBuilder strBuilder = new StringBuilder(searchBegin+"queryType=pic"+searchCombine);
+		StringBuilder strBuilder = new StringBuilder(CommonConstant.SEARCH_BEGIN+"queryType=pic"+CommonConstant.SEARCH_COMBINE);
 		strBuilder.append("name="+getName());
 		return strBuilder.toString();
 	}
+
+	public String generateSearchSnapCondition()
+	{
+		StringBuilder strBuilder = new StringBuilder(CommonConstant.SEARCH_BEGIN+"queryType=snap"+CommonConstant.SEARCH_COMBINE);
+		strBuilder.append("name="+getName());
+		return strBuilder.toString();
+	}
+
 
 
 

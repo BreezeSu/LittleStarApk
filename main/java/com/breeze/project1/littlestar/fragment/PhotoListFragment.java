@@ -161,17 +161,38 @@ public class PhotoListFragment extends Fragment
 			List < PhotoInfoRestModel > photoRestList = (List<PhotoInfoRestModel>) data.getSerializable("photoInfoList");
 			photoListAdpt.setPhotoList(photoRestList);
 			photoListAdpt.notifyDataSetChanged();
+			 PhotoInfoSO so = new PhotoInfoSO();
+			so.setServerIp(serverIp);
+			 for(int i=0;i<photoRestList.size();i++)
+			 {
+				 so.setName(photoRestList.get(i).getName());
+				 new Thread(new GetSnapViewRunnable(i,snapHandler,so)).start();
+			 }
 		}
 	};
 
 
 
 
+	Handler snapHandler = new Handler(){
+		@Override
+		public void handleMessage(Message msg) {
+			super.handleMessage(msg);
+			Bundle data = msg.getData();
+			Bitmap snapView =  data.getParcelable("photoSnap");
+			int index = data.getInt("index");
+			photoListAdpt.getItem(index).setImageSnapView(snapView);
+			photoListAdpt.notifyDataSetChanged();
+		}
+	};
+
+
+
 
 	private class QueryPhotoInfoRunnable implements Runnable
 	{
-		PhotoInfoSO searchObject = null;
-		Handler innerHandler = null;
+		private PhotoInfoSO searchObject = null;
+		private Handler innerHandler = null;
 
 		public QueryPhotoInfoRunnable(PhotoInfoSO so, Handler handler)
 		{
@@ -184,14 +205,37 @@ public class PhotoListFragment extends Fragment
 
 			Message msg = new Message();
 			Bundle data = new Bundle();
-			data.putSerializable("photoInfoList",(Serializable)new QueryService().getRemotePhotoInfo(searchObject));
+			data.putSerializable("photoInfoList",(Serializable)QueryService.getInstance().getRemotePhotoInfo(searchObject));
 			msg.setData(data);
 			handler.sendMessage(msg);
 		}
 	}
 
 
+private class GetSnapViewRunnable implements  Runnable
+{
+	private int index = 0;
+	private Handler getSnapHandler = null;
+	private PhotoInfoSO searchObject = null;
 
+	public GetSnapViewRunnable(int idx,Handler snapHandler,PhotoInfoSO so)
+	{
+		index = idx;
+		getSnapHandler = snapHandler;
+		searchObject = so;
+	}
+
+	@Override
+	public void run()
+	{
+		Message msg = new Message();
+		Bundle data = new Bundle();
+		data.putParcelable("photoSnap",QueryService.getInstance().getRemotePhotoSnap(searchObject));
+		data.putInt("index",index);
+		msg.setData(data);
+		snapHandler.sendMessage(msg);
+	}
+}
 
 
 }

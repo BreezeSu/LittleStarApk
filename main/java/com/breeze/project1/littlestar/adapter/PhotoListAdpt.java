@@ -75,6 +75,9 @@ public class PhotoListAdpt extends ArrayAdapter<PhotoInfoRestModel>
 		name.setText(photoItem.getName());
 		TextView date = (TextView) convertView.findViewById(R.id.photo_date);
 		date.setText(photoItem.getDate());
+
+		ImageView imageView = (ImageView) convertView.findViewById(R.id.photo_image);
+		imageView.setImageBitmap(photoItem.getImageSnapView());
 		return convertView;
 	}
 

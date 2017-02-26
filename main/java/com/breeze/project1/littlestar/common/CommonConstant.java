@@ -10,4 +10,13 @@ public class CommonConstant
 	public static String HTTP_URL_HEAD = "http://";
 
 	public static String LITTLESTAR_URL=":8080/LittleStar/HelloWorld";
+
+
+
+
+	public static String SEARCH_COMBINE = "&";
+
+	public static String SEARCH_BEGIN = "?";
+
+
 }

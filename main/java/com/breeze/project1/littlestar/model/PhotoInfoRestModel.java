@@ -4,6 +4,7 @@ package com.breeze.project1.littlestar.model;
  * Created by Lesley on 2017/1/26.
  */
 
+import android.graphics.Bitmap;
 import android.os.Parcelable;
 
 import java.io.Serializable;
@@ -46,6 +47,9 @@ public class PhotoInfoRestModel implements Serializable
 	 * 相机型号
 	 */
 	private String cameraModel;
+
+
+	private Bitmap imageSnapView;
 
 	public PhotoInfoRestModel()
 	{
@@ -128,5 +132,14 @@ public class PhotoInfoRestModel implements Serializable
 		this.cameraModel = cameraModel;
 	}
 
+	public Bitmap getImageSnapView()
+	{
+		return imageSnapView;
+	}
+
+	public void setImageSnapView(Bitmap imageSnapView)
+	{
+		this.imageSnapView = imageSnapView;
+	}
 }
 
